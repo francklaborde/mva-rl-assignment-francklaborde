@@ -75,7 +75,7 @@ class Agent_DQN:
         state, _ = env.reset()
         epsilon = self.epsilon_max
         step = 0
-
+        print("Using device: ", "cuda" if next(self.model.parameters()).is_cuda else "cpu")
         while episode < max_episodes:
             # update epsilon
             if step > self.epsilon_delay:
