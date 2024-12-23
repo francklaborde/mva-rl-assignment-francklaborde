@@ -5,7 +5,7 @@ import numpy as np
 import torch
 
 from evaluate import evaluate_HIV, evaluate_HIV_population
-from train import ProjectAgent  # Replace DummyAgent with your agent implementation
+from train import Agent_DQN  # Replace DummyAgent with your agent implementation
 
 
 def seed_everything(seed: int = 42):
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     if not file.is_file():
         seed_everything(seed=42)
         # Initialization of the agent. Replace DummyAgent with your custom agent implementation.
-        agent = ProjectAgent()
+        agent = Agent_DQN()
         agent.load()
         # Evaluate agent and write score.
         score_agent: float = evaluate_HIV(agent=agent, nb_episode=5)

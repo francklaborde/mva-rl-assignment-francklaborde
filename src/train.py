@@ -114,7 +114,8 @@ class Agent_DQN:
     def save(self, path):
         torch.save(self.model.state_dict(), path)
 
-    def load(self, path):
+    def load(self):
+        path = "model.pth"
         self.model.load_state_dict(torch.load(path))
         self.model.eval()
 
