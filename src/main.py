@@ -64,7 +64,7 @@ if __name__ == "__main__":
             torch.nn.ReLU(),
             torch.nn.Linear(args.nb_neurons, env.action_space.n),
         )
-        agent = Agent_DQN()
+        agent = Agent_DQN(config=config, env=env, model=model)
         agent.load()
         # Evaluate agent and write score.
         score_agent: float = evaluate_HIV(agent=agent, nb_episode=5)
