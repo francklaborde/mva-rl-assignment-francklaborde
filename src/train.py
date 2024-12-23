@@ -45,7 +45,7 @@ class Agent_DQN:
         self.device = config['device']
         self.action_space = env.action_space
         self.observation_space = env.observation_space
-        self.max_timesteps = env.max_episode_steps
+        self.max_timesteps = config['max_timesteps']
         self.gamma = config['gamma']
         self.batch_size = config['batch_size']
         self.memory = ReplayBuffer(config['buffer_size'], self.device)
@@ -58,6 +58,7 @@ class Agent_DQN:
         self.criterion = torch.nn.MSELoss()
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=config['learning_rate'])
         self.verbose = config['verbose']
+        self.plot = config['plot']
 
     def gradient_step(self):
         if len(self.memory) > self.batch_size:
@@ -129,6 +130,9 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--nb_neurons", type=int, default=24)
     parser.add_argument("--verbose", action="store_true", default=False)
+    parser.add_argument("--plot", action="store_true", default=False)
+    parser.add_argument("--max_timesteps", type=int, default=200)
+
     args = parser.parse_args()
 
     config = {
@@ -142,6 +146,8 @@ if __name__ == "__main__":
         "epsilon_delay_decay": args.epsilon_delay_decay,
         "batch_size": args.batch_size,
         "verbose": args.verbose,
+        "max_timesteps": args.max_timesteps,
+        "plot": args.plot,
     }
 
     model = torch.nn.Sequential(
