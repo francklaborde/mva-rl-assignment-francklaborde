@@ -43,7 +43,7 @@ class Agent_DQN:
         self.env = env
         self.action_space = env.action_space
         self.observation_space = env.observation_space
-        device = "cuda" if next(model.parameters()).is_cuda else "cpu"
+        device = config['device']
         self.gamma = config['gamma']
         self.batch_size = config['batch_size']
         self.memory = ReplayBuffer(config['buffer_size'], device)
@@ -149,6 +149,7 @@ if __name__ == "__main__":
 
 
     config = {
+        "device": "cuda" if torch.cuda.is_available() else "cpu",
         'learning_rate': args.lr,
         'gamma': args.gamma,
         'buffer_size': args.buffer_size,
