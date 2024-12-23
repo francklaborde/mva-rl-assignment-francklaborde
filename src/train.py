@@ -139,7 +139,7 @@ if __name__ == "__main__":
         "epsilon_decay_period": args.epsilon_decay_period,
         "epsilon_delay_decay": args.epsilon_delay_decay,
         "batch_size": args.batch_size,
-        "verbose": self.verbose,
+        "verbose": args.verbose,
     }
 
     model = torch.nn.Sequential(
