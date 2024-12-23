@@ -56,6 +56,7 @@ class Agent_DQN:
         self.model = model.to(self.device)  # Move model to device
         self.criterion = torch.nn.MSELoss()
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=config['learning_rate'])
+        self.verbose = config['verbose']
 
     def gradient_step(self):
         if len(self.memory) > self.batch_size:
@@ -77,7 +78,7 @@ class Agent_DQN:
         for episode in range(max_episodes):
             episode_cum_reward = 0
             done = False
-            while not done:
+            while not done:                
                 if step > self.epsilon_delay:
                     epsilon = max(self.epsilon_min, epsilon - self.epsilon_step)
                 if np.random.rand() < epsilon:
@@ -89,6 +90,8 @@ class Agent_DQN:
                 episode_cum_reward += reward
                 self.gradient_step()
                 state = next_state if not done else env.reset()[0]
+                if self.verbose:
+                    print(f"Step {step}, State, : {state}, Action: {action}, Reward: {reward}")
                 step += 1
             episode_return.append(episode_cum_reward)
             print(f"Episode {episode + 1}, Return: {episode_cum_reward:.2f}, Epsilon: {epsilon:.2f}")
