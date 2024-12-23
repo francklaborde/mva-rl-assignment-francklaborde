@@ -126,7 +126,7 @@ if __name__ == "__main__":
     parser.add_argument("--epsilon_delay_decay", type=int, default=20)
     parser.add_argument("--batch_size", type=int, default=20)
     parser.add_argument("--nb_neurons", type=int, default=24)
-
+    parser.add_argument("--verbose", action="store_true", default=False)
     args = parser.parse_args()
 
     config = {
@@ -139,6 +139,7 @@ if __name__ == "__main__":
         "epsilon_decay_period": args.epsilon_decay_period,
         "epsilon_delay_decay": args.epsilon_delay_decay,
         "batch_size": args.batch_size,
+        "verbose": self.verbose,
     }
 
     model = torch.nn.Sequential(
