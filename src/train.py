@@ -45,6 +45,7 @@ class Agent_DQN:
         self.device = config['device']
         self.action_space = env.action_space
         self.observation_space = env.observation_space
+        self.max_timesteps = env.max_episode_steps
         self.gamma = config['gamma']
         self.batch_size = config['batch_size']
         self.memory = ReplayBuffer(config['buffer_size'], self.device)
@@ -78,7 +79,8 @@ class Agent_DQN:
         for episode in range(max_episodes):
             episode_cum_reward = 0
             done = False
-            while not done:                
+            # There is no done=True in the env.step() function, so we need to track the number of steps
+            for j in range(self.max_timesteps):              
                 if step > self.epsilon_delay:
                     epsilon = max(self.epsilon_min, epsilon - self.epsilon_step)
                 if np.random.rand() < epsilon:
