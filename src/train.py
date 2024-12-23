@@ -46,7 +46,6 @@ class Agent_DQN:
         device = "cuda" if next(model.parameters()).is_cuda else "cpu"
         self.gamma = config['gamma']
         self.batch_size = config['batch_size']
-        self.nb_actions = config['nb_actions']
         self.memory = ReplayBuffer(config['buffer_size'], device)
         self.epsilon_max = config['epsilon_max']
         self.epsilon_min = config['epsilon_min']
@@ -120,7 +119,7 @@ class Agent_DQN:
     
     def act(self, observation, use_random=False):
         if use_random or np.random.rand() < self.epsilon_max:  # epsilon for exploration
-                return np.random.randint(self.nb_actions)  # Random action
+                return np.random.randint(self.action_space)  # Random action
         else:
             return greedy_action(self.model, observation)  # Greedy action
         
@@ -146,7 +145,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    env_hiv = env.make()
+    env_hiv = env
 
 
     config = {
